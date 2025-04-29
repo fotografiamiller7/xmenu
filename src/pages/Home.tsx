@@ -228,7 +228,7 @@ function Home() {
                   className="group inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 transform hover:scale-105"
                 >
                   <Rocket className="mr-3 h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" />
-                  Comece Gratuitamente
+                  Comece Gratuitamente agora.
                 </button>
                 <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
                   Não precisa de cartão de crédito
@@ -301,7 +301,7 @@ function Home() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-base text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">
-              Funcionalidades
+              Principais Funcionalidades
             </h2>
             <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
               Tudo que você precisa em um só lugar
