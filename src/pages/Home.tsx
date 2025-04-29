@@ -206,7 +206,7 @@ function Home() {
                   </span>
                 </span>
                 <span className="mt-1 block text-4xl sm:text-5xl xl:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                  Transforme seu negócio com um catálogo digital profissional
+                  Transforme seu negócio com um catálogo digital profissional hoje mesmo.
                 </span>
               </motion.h1>
               <motion.p 
