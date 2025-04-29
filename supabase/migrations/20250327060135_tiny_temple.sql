@@ -1,0 +1,63 @@
+/*
+  # Fix profiles table authentication and policies
+
+  1. Changes
+    - Drop existing policies to avoid conflicts
+    - Create new policies for authentication
+    - Ensure proper foreign key relationship with auth.users
+    - Add index for better performance
+
+  2. Security
+    - Enable RLS
+    - Allow users to read/update their own profiles
+    - Allow admin full access
+*/
+
+-- Drop existing foreign key if it exists
+ALTER TABLE profiles
+DROP CONSTRAINT IF EXISTS profiles_id_fkey;
+
+-- Create proper foreign key relationship
+ALTER TABLE profiles
+ADD CONSTRAINT profiles_id_fkey 
+FOREIGN KEY (id) 
+REFERENCES auth.users(id)
+ON DELETE CASCADE;
+
+-- Create index for better join performance
+CREATE INDEX IF NOT EXISTS idx_profiles_id ON profiles(id);
+
+-- Enable RLS
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies to avoid conflicts
+DROP POLICY IF EXISTS "Users can read own profile" ON profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
+DROP POLICY IF EXISTS "Users can insert own profile" ON profiles;
+DROP POLICY IF EXISTS "Admin access" ON profiles;
+
+-- Create new policies
+CREATE POLICY "Users can read own profile"
+ON profiles FOR SELECT
+TO authenticated
+USING (id = auth.uid());
+
+CREATE POLICY "Users can update own profile"
+ON profiles FOR UPDATE
+TO authenticated
+USING (id = auth.uid())
+WITH CHECK (id = auth.uid());
+
+CREATE POLICY "Users can insert own profile"
+ON profiles FOR INSERT
+TO authenticated
+WITH CHECK (id = auth.uid());
+
+CREATE POLICY "Admin access"
+ON profiles FOR ALL 
+TO authenticated
+USING (EXISTS (
+  SELECT 1 FROM auth.users 
+  WHERE auth.users.id = auth.uid() 
+  AND auth.users.email = 'admin@admin.com'
+));

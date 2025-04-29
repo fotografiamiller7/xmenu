@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auth-background {
+  background: #0061FF;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-illustration {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://raw.githubusercontent.com/stackblitz/stackblitz-images/main/store-3d.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+}
+
+.auth-dots {
+  @apply flex gap-2 justify-center mt-8;
+}
+
+.auth-dot {
+  @apply w-2 h-2 rounded-full bg-white/30;
+}
+
+.auth-dot.active {
+  @apply bg-white;
+}
+
+.social-button {
+  @apply flex items-center justify-center gap-2 px-4 py-2.5 w-full border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors;
+}
+
+.input-field {
+  @apply w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900;
+}
+
+.input-field::placeholder {
+  @apply text-gray-400;
+  text-indent: 0;
+}
+
+/* Home page styles */
+.home-gradient-text {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(to right, #0061FF, #60A5FA, #818CF8);
+}
+
+.home-gradient-bg {
+  background: linear-gradient(270deg, #0061FF, #60A5FA, #818CF8);
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+.home-float-animation {
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-1%, -1%) scale(1.02); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Hero Section Animation */
+.hero-text-reveal {
+  animation: textReveal 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes textReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stats Counter Animation */
+.stats-counter {
+  animation: countUp 2s ease-out forwards;
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Featured Products Swiper Styles */
+.featured-products-swiper {
+  padding-bottom: 40px !important;
+}
+
+.featured-products-swiper .swiper-button-next,
+.featured-products-swiper .swiper-button-prev {
+  color: #0061FF;
+}
+
+.featured-products-swiper .swiper-pagination-bullet {
+  background: #0061FF;
+  opacity: 0.5;
+}
+
+.featured-products-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+.featured-products-swiper:hover .swiper-button-next,
+.featured-products-swiper:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+.featured-products-swiper .swiper-button-next,
+.featured-products-swiper .swiper-button-prev {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Featured Products Slide Styles */
+.featured-products-swiper .swiper-slide {
+  height: auto !important;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.featured-products-swiper .swiper-slide {
+  opacity: 1 !important;
+  transition: transform 0.3s ease;
+}
+
+/* Testimonials Swiper Styles */
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  background-image: none !important;
+}
+
+.swiper-slide {
+  transition: all 0.5s ease;
+  opacity: 0.5;
+  padding-bottom: 40px;
+}
+
+.swiper-slide-active {
+  transform: scale(1.02);
+  opacity: 1;
+}
+
+.testimonials-swiper {
+  padding-bottom: 60px !important;
+}
+
+.testimonials-swiper .swiper-pagination {
+  bottom: 20px !important;
+}
+
+.testimonials-swiper .swiper-pagination-bullet {
+  margin: 0 6px;
+  width: 10px;
+  height: 10px;
+  transition: all 0.3s ease;
+}
+
+.testimonials-swiper .swiper-pagination-bullet-active {
+  width: 24px;
+  border-radius: 4px;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0061FF;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0052DB;
+}
+
+.swiper-pagination-bullet-active {
+  background: #0061FF !important;
+}
+
+/* Feature icon animation */
+.feature-icon {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: .9;
+    transform: scale(1.05);
+  }
+}
+
+/* FAQ Accordion Styles */
+.faq-accordion-item {
+  @apply overflow-hidden border-b border-gray-200 dark:border-gray-700 last:border-0;
+}
+
+.faq-accordion-header {
+  @apply flex items-center justify-between w-full py-5 text-left transition-colors;
+}
+
+.faq-accordion-content {
+  @apply overflow-hidden transition-all duration-300 ease-in-out;
+}
+
+.faq-accordion-icon {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.faq-accordion-item[data-state="open"] .faq-accordion-icon {
+  transform: rotate(180deg);
+}
+
+/* Store contact info styles */
+.store-contact-info {
+  @apply flex flex-wrap justify-center gap-4 mb-6;
+  z-index: 10;
+}
+
+.store-contact-item {
+  @apply flex items-center gap-2 text-white px-4 py-2 bg-black/30 backdrop-blur-sm rounded-lg;
+  min-width: max-content;
+}
+
+.store-contact-item a {
+  @apply text-white hover:text-white/90 transition-colors;
+}
+
+/* Fix for statistics cards visibility */
+.statistics-container {
+  display: block;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-bottom: 2rem;
+}

@@ -2,6 +2,24 @@
 
 This repository contains scripts to automate the setup and deployment of XMenu on a VPS (Virtual Private Server).
 
+## GitHub Integration
+
+This project is configured for GitHub integration with automatic deployments:
+
+1. Push changes to the `main` branch to trigger automatic deployment
+2. GitHub Actions will build and deploy the application to your VPS
+3. Secrets must be configured in your GitHub repository settings
+
+### Required GitHub Secrets
+
+Set up the following secrets in your GitHub repository:
+
+- `SUPABASE_URL`: Your Supabase project URL
+- `SUPABASE_ANON_KEY`: Your Supabase anonymous key
+- `SSH_HOST`: Your VPS IP address
+- `SSH_USERNAME`: Your VPS username (usually 'root')
+- `SSH_PRIVATE_KEY`: Your SSH private key for server access
+
 ## Files Included
 
 1. `setup-vps.sh` - Initial server setup script
@@ -18,6 +36,20 @@ This repository contains scripts to automate the setup and deployment of XMenu o
 - Supabase project (already configured)
 
 ## Setup Instructions
+
+### 0. GitHub Setup
+
+1. Create a new GitHub repository
+2. Add the required secrets in your repository settings
+3. Push your code to the repository:
+   ```
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/yourusername/xmenu.git
+   git push -u origin main
+   ```
 
 ### 1. Initial Server Setup
 
@@ -100,6 +132,13 @@ After the initial setup, configure Supabase:
 
 ## Maintenance
 
+### GitHub Workflow
+
+The project includes a GitHub Actions workflow that automatically:
+1. Builds the application when changes are pushed to the main branch
+2. Deploys the built files to your VPS
+3. Runs the deployment script on your server
+
 ### Updating the Application
 
 To update the application, run the deployment script again:
@@ -133,6 +172,7 @@ ssh root@your-server-ip "tail -f /var/log/nginx/xmenu.error.log"
 
 ## Security Considerations
 
+- GitHub secrets are used to store sensitive information
 - Random database password is generated during setup
 - SSL is configured with Let's Encrypt for secure HTTPS
 - Database and Supabase credentials are stored in protected files
@@ -162,3 +202,58 @@ If you encounter issues:
 4. Check if the database is running:
    ```
    systemctl status postgresql
+   ```
+
+## GitHub Actions Workflow
+
+The GitHub Actions workflow automates the deployment process:
+
+```yaml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          
+      - name: Deploy to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "dist/"
+          target: "/var/www/xmenu"
+          
+      - name: Execute remote commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/xmenu
+            chmod +x deploy.sh
+            ./deploy.sh
