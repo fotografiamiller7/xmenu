@@ -228,10 +228,10 @@ function Home() {
                   className="group inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 transform hover:scale-105"
                 >
                   <Rocket className="mr-3 h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" />
-                  Comece Gratuitamente agora.
+                  Comece Gratuitamente.
                 </button>
                 <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                  Não precisa de cartão de crédito
+                  Não precisa de cartão de crédito.
                 </p>
               </motion.div>
             </div>
